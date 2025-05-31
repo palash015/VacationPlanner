@@ -11,6 +11,12 @@ This project demonstrates an integration of backend business logic (holiday proc
 
 ---
 
+## 🖼️ Application Screenshot
+
+
+![Vacation Planner UI](https://github.com/palash015/VacationPlanner/tree/master/src/main/resources/Screenshot)
+
+
 ## 🧰 Technologies & Libraries Used
 
 ### 🔧 Backend
