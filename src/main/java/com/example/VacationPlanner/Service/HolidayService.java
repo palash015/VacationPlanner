@@ -32,7 +32,7 @@ public class HolidayService {
                 .toList();
 
         Map<String, Integer> weekHolidayCounts = new HashMap<>();
-        WeekFields weekFields = WeekFields.ISO;
+        WeekFields weekFields =  WeekFields.of(DayOfWeek.SUNDAY, 1);
 
         for (Holiday h : holidays) {
             int week = h.getDate().get(weekFields.weekOfWeekBasedYear());

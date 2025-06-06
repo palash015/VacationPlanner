@@ -34,9 +34,25 @@
           background-color: #c8facc !important;
         }
 
+        .hidden {
+          display: none;
+        }
+
+        .fc .fc-daygrid-body-natural .fc-daygrid-day {
+          padding: 0;
+        }
+
+        .fc .fc-daygrid-day-frame {
+          margin: 0;
+        }
+
         .two-holidays-week {
           background-color: #2e7d32 !important;
           color: white !important;
+        }
+
+        .fc-daygrid-body tr.holiday-week {
+          background-color: #c6f5c6 !important;
         }
     </style>
 </head>
@@ -58,6 +74,11 @@
             <option value="quarterly">Quarterly</option>
         </select>
     </label>
+
+    <label style="margin-left:20px;">
+        Holiday Week:
+        <input type="checkbox" id="toggleButton" />
+    </label>
 </div>
 
 <div id="calendarContainer"></div>
@@ -65,19 +86,33 @@
 <script>
     let calendars = [];
 
+
     document.getElementById('countrySelect').addEventListener('change', () => {
       renderCalendars(
         document.getElementById('viewSelect').value,
-        document.getElementById('countrySelect').value
+        document.getElementById('countrySelect').value,
+         document.getElementById('toggleButton').value
+
       );
     });
 
     document.getElementById('viewSelect').addEventListener('change', () => {
       renderCalendars(
         document.getElementById('viewSelect').value,
-        document.getElementById('countrySelect').value
+        document.getElementById('countrySelect').value,
+         document.getElementById('toggleButton').value
       );
     });
+
+    document.getElementById('toggleButton').addEventListener('change', () => {
+       console.log(document.getElementById('toggleButton').checked);
+      renderCalendars(
+        document.getElementById('viewSelect').value,
+         document.getElementById('countrySelect').value,
+        document.getElementById('toggleButton').checked
+      );
+    });
+
 
     function getWeekNumber(date) {
       const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
@@ -104,9 +139,9 @@
       document.getElementById('calendarContainer').innerHTML = '';
     }
 
-    async function renderCalendars(mode, country) {
+    async function renderCalendars(mode, country, showHolidayWeek) {
       destroyCalendars();
-
+       console.log(showHolidayWeek);
       const today = new Date();
       const monthCount = mode === 'quarterly' ? 3 : 1;
 
@@ -136,18 +171,50 @@
             center: 'title',
             right: ''
           },
+          firstDay: 0,
           events: filteredEvents,
+          aspectRatio: 1.8,
+          contentHeight: 'auto',
           dayCellDidMount: function(info) {
             const weekNum = getWeekNumber(info.date);
             const count = weekHolidayCounts[weekNum] || 0;
 
-            if (count === 1) {
+            if (count == 1) {
               info.el.classList.add('one-holiday-week');
-            } else if (count === 2) {
+            } else if (count >= 2) {
               info.el.classList.add('two-holidays-week');
             }
-          }
+          },
+          datesSet: function () {
+              const rows = container.querySelectorAll('.fc-daygrid-body tr');
+
+              rows.forEach(row => {
+                let hasHoliday = false;
+
+                const cells = row.querySelectorAll('.fc-daygrid-day');
+
+                cells.forEach(cell => {
+                  const dateStr = cell.getAttribute('data-date');
+                  if (filteredEvents.some(ev => ev.start.startsWith(dateStr))) {
+                    hasHoliday = true;
+                  }
+                });
+
+                if (hasHoliday) {
+                  row.classList.add('holiday-week');
+                } else {
+                  row.classList.remove('holiday-week');
+                }
+
+                if (showHolidayWeek) {
+                  row.style.display = hasHoliday ? '' : 'none';
+                } else {
+                  row.style.display = '';
+                }
+              });
+            }
         });
+
 
         calendar.render();
         calendars.push(calendar);
@@ -155,7 +222,7 @@
     }
 
     // Initial load
-    renderCalendars('monthly', 'US');
+    renderCalendars('monthly', 'US', false);
 </script>
 
 </body>
