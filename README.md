@@ -1,16 +1,23 @@
 # 🌴 Vacation Planner
 
-**Vacation Planner** is a web-based calendar application built with **Spring Boot** and **Thymeleaf**. 
-It displays public holidays for selected countries (like India or the US) on a full-screen, interactive calendar interface powered by **FullCalendar.js**.
-
-Users can switch between **monthly** and **quarterly** views. Each week is visually marked with color codes based on the number of holidays:
+**Vacation Planner** is a web-based calendar application built to plan your vacation better by highlighting holiday week.
+Each week is visually marked with color codes based on the number of holidays:
 - 🟢 Light Green: 1 holiday in the week
 - 🟢 Dark Green: 2 or more holidays in the week
 
-This project demonstrates an integration of backend business logic (holiday processing and week-based aggregation) with a dynamic, user-friendly frontend calendar view.
+It supports public holidays for multiple countries (like India or the US) on a full-screen.
+
+Users can switch between **monthly** and **quarterly** views.
+Web-based calendar application is built with **Spring Boot** and **Thymeleaf** and interactive calendar interface powered by **FullCalendar.js**.
 
 ---
 
+## 🖼️ Application Screenshot
+
+
+![Vacation Planner UI](https://github.com/palash015/VacationPlanner/tree/master/src/main/resources/Screenshot)
+
+---
 ## 🧰 Technologies & Libraries Used
 
 ### 🔧 Backend
