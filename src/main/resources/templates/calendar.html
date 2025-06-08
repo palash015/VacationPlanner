@@ -91,7 +91,7 @@
       renderCalendars(
         document.getElementById('viewSelect').value,
         document.getElementById('countrySelect').value,
-         document.getElementById('toggleButton').value
+         document.getElementById('toggleButton').checked
 
       );
     });
@@ -100,7 +100,7 @@
       renderCalendars(
         document.getElementById('viewSelect').value,
         document.getElementById('countrySelect').value,
-         document.getElementById('toggleButton').value
+         document.getElementById('toggleButton').checked
       );
     });
 
@@ -222,7 +222,7 @@
     }
 
     // Initial load
-    renderCalendars('monthly', 'US', false);
+    renderCalendars('monthly', 'US');
 </script>
 
 </body>
